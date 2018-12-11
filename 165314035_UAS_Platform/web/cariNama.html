@@ -122,7 +122,7 @@ and open the template in the editor.
                             alert("Nama Anda tidak ditemukan silakan coba lagi");
                         }
                     }
-                }
+                };
                 xhttp.open("GET", url, true);
                 xhttp.send();
 
@@ -135,7 +135,7 @@ and open the template in the editor.
                         out += "<tbody><tr><td>" + size[i].nik +
                                 "</td><td>" + size[i].nama +
                                 "</td><td>" + size[i].tanggalLahir +
-                                "</td><form><input type='button' value='Detil'></form><td>" + size[i] +
+                                "</td><td>" + "<button type='button' onclick='openPage()' id='btn' >NIK</button>" +
                                 "</td></tr></tbody>";
                     }
                     out += "</table>";
@@ -144,6 +144,9 @@ and open the template in the editor.
                 }
             }          
             
+            function openPage(){
+                window.open("detilPasien.html","_self");
+            }
         </script>
 
         <footer>

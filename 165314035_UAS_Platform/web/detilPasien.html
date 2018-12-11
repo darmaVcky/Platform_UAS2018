@@ -86,7 +86,7 @@ and open the template in the editor.
     </head>
     <body>     
         <header>
-            <h1 style="">Cari Nama Pasien</h1>
+            <h1 style="">Cari NIK Pasien</h1>
         </header>
 
         <section>            
@@ -99,9 +99,9 @@ and open the template in the editor.
                 <form action="" id="registerForm" method="GET">
                     <div class="container"><br><br>
                         <div class ="form-group">
-                            <label for="nama">Nama Pasien</label><br>
-                            <input type="text" placeholder="Enter Nama" id="nama" required/>
-                            <button type="button" onclick="cariPasien()" id="btn">OK</button>
+                            <label for="nik">NIK Pasien</label><br>
+                            <input type="text" placeholder="Enter NIK" id="nik" required/>
+                            <button type="button" onclick="cariNIK()" id="btn">OK</button>
                         </div><br><br><br>
                     </div>
                     <p id="table"></p>
@@ -110,8 +110,9 @@ and open the template in the editor.
         </section>
 
         <script>
-            function cariPasien() {
-                var url = "http://206.189.38.188:8080/myrs/webresources/pasien/cariNamaPasien?nama=" + nama.value;
+            function cariNIK() {
+                var url = "http://206.189.38.188:8080/myrs/webresources/pasien/cariPasien?nik=" + nik.value;
+//                var url = "http://206.189.38.188:8080/myrs/webresources/pasien/cariPasien?nik=33101";
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
@@ -119,28 +120,29 @@ and open the template in the editor.
                         if (myObj !== null) {
                             loopingList(this.responseText);
                         } else {
-                            alert("Nama Anda tidak ditemukan silakan coba lagi");
+                            alert("NIK Anda tidak ditemukan silakan coba lagi");
                         }
                     }
-                }
+                };
                 xhttp.open("GET", url, true);
                 xhttp.send();
 
                 function loopingList(response) {
                     var size = JSON.parse(response);
                     var i;
-                    var out = "<table border='1' class='table-wrapper-scroll-y'><thead><tr><th>NIK</th><th>Nama</th><th>Tanggal Lahir</th><th>Keterangan</th></tr></thead>";
+                    var out = "<table border='1' class='table-wrapper-scroll-y'><thead><tr><th>No. Rekam Medis</th><th>Nama</th><th>Alamat</th><th>NIK</th><th>Tanggal Lahir</th><th>Jenis Kelamin</th></tr></thead>";
 
                     for (i = 0; i < size.length; i++) {
-                        out += "<tbody><tr><td>" + size[i].nik +
+                        out += "<tbody><tr><td>" + size[i].noRm +
                                 "</td><td>" + size[i].nama +
+                                "</td><td>" + size[i].alamat +
+                                "</td><td>" + size[i].nik +
                                 "</td><td>" + size[i].tanggalLahir +
-                                "</td><form><input type='button' value='Detil'></form><td>" + size[i] +
+                                "</td><td>" + size[i].kelamin +
                                 "</td></tr></tbody>";
                     }
                     out += "</table>";
                     document.getElementById("table").innerHTML = out;
-//                        ;
                 }
             }          
             
