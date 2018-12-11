@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>165314035_UAS_Platform2018</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Krona+One|Sura" rel="stylesheet">
+        <!--css layout-->
+        <style> 
+            * {
+                box-sizing: border-box;
+            }
+
+            /* Style the header */
+            header {
+                font-family:'Krona One', sans-serif;
+                font-size: 30px; 
+                color: #00aaff;                
+                text-align: center;
+                /*background-color: #00aaff;*/
+                padding: 20px;
+                background-image: url("bg50.jpg");
+                background-size: cover;
+                /*opacity: 0.5;*/                
+            }
+
+            /* Create two columns/boxes that floats next to each other */
+            nav {
+                float: left;
+                width: 30%;
+                height: 650px;
+                font-family: trebuchet ms;
+                background: #99dfff;
+                padding: 20px;
+                text-align: left;
+                background-image: url("health-care-clinic.png");
+                background-position: bottom;
+                background-repeat: no-repeat;
+                background-size: 410px;
+            }
+
+            article {
+                float: left;
+                padding: 20px;
+                width: 70%;
+                background-color: white;
+                height: 650px; 
+                text-align: center;
+                font-family: trebuchet ms;
+                /*                background-image: url("nurse.png");
+                                background-position: right bottom;
+                                background-repeat: no-repeat;
+                                background-size: 300px;*/
+            }
+
+            /* Clear floats after the columns */
+            section:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+
+            /* Style the footer */
+            footer {
+                background-color: burlywood;
+                padding: 10px;
+                text-align: center;
+                font-family:palatino; 
+                font-size: 20px; 
+                color: darkmagenta;
+            }
+
+            /* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+            @media (max-width: 600px) {
+                nav, article {
+                    width: 100%;
+                    height: auto;
+                }
+            }
+
+            <!--CSS TABLE-->
+
+            .table-wrapper-scroll-y {
+                display: block;
+                max-height: 450px;                
+                overflow-y: auto;
+                -ms-overflow-style: -ms-autohiding-scrollbar;
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+    </head>
+    <body>     
+        <header>
+            <h1 style="">Cari Nama Pasien</h1>
+        </header>
+
+        <section>            
+            <nav>
+
+            </nav>
+
+            <article>
+                <h3 style="text-align: center;"><b><u>Tabel Pasien</u></b></h3>
+                <form action="" id="registerForm" method="GET">
+                    <div class="container"><br><br>
+                        <div class ="form-group">
+                            <label for="nama">Nama Pasien</label><br>
+                            <input type="text" placeholder="Enter Nama" id="nama" required/>
+                            <button type="button" onclick="cariPasien()" id="btn">OK</button>
+                        </div><br><br><br>
+                    </div>
+                    <p id="table"></p>
+                </form>
+            </article>
+        </section>
+
+        <script>
+            function cariPasien() {
+                var url = "http://206.189.38.188:8080/myrs/webresources/pasien/cariNamaPasien?nama=" + nama.value;
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var myObj = JSON.parse(this.responseText);
+                        if (myObj !== null) {
+                            loopingList(this.responseText);
+                        } else {
+                            alert("Nama Anda tidak ditemukan silakan coba lagi");
+                        }
+                    }
+                }
+                xhttp.open("GET", url, true);
+                xhttp.send();
+
+                function loopingList(response) {
+                    var size = JSON.parse(response);
+                    var i;
+                    var out = "<table border='1' class='table-wrapper-scroll-y'><thead><tr><th>NIK</th><th>Nama</th><th>Tanggal Lahir</th></tr></thead>";
+
+                    for (i = 0; i < size.length; i++) {
+                        out += "<tbody><tr><td>" + size[i].nik +
+                                "</td><td>" + size[i].nama +
+                                "</td><td>" + size[i].tanggalLahir +
+                                "</td></tr></tbody>";
+                    }
+                    out += "</table>";
+                    document.getElementById("table").innerHTML = out;
+//                        ;
+                }
+            }          
+            
+        </script>
+
+        <footer>
+            <p>Kritik dan Saran (0721)-74032576</p>
+        </footer>
+
+    </body>
+</html>
+
